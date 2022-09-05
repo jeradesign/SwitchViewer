@@ -20,6 +20,7 @@
 		423B400528B9E2F2001D87CA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		423B400828B9E2F2001D87CA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		423B400A28B9E2F2001D87CA /* SwitchViewer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SwitchViewer.entitlements; sourceTree = "<group>"; };
+		423B401528BA8DE6001D87CA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +53,7 @@
 		423B400028B9E2F2001D87CA /* SwitchViewer */ = {
 			isa = PBXGroup;
 			children = (
+				423B401528BA8DE6001D87CA /* Info.plist */,
 				423B400128B9E2F2001D87CA /* AppDelegate.swift */,
 				423B400328B9E2F2001D87CA /* ViewController.swift */,
 				423B400528B9E2F2001D87CA /* Assets.xcassets */,
@@ -275,8 +277,11 @@
 				DEVELOPMENT_TEAM = 2HTMSZT3TA;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SwitchViewer/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "To access your video input adapter";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "To access sound from your video input adapter";
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -302,8 +307,11 @@
 				DEVELOPMENT_TEAM = 2HTMSZT3TA;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SwitchViewer/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "To access your video input adapter";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "To access sound from your video input adapter";
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
