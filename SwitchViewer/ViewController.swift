@@ -26,7 +26,11 @@ class ViewController: NSViewController {
     private var setupResult: SessionSetupResult = .success
     
     @objc dynamic var videoDeviceInput: AVCaptureDeviceInput!
+    @objc dynamic var audioDeviceInput: AVCaptureDeviceInput!
     
+    let audioOutput = AVCaptureAudioPreviewOutput()
+    
+
     @IBOutlet private weak var previewView: NSView!
     
     // MARK: View Controller Life Cycle
@@ -135,20 +139,15 @@ class ViewController: NSViewController {
         }
         
         session.beginConfiguration()
-        
-        /*
-         Do not create an AVCaptureMovieFileOutput when setting up the session because
-         Live Photo is not supported when AVCaptureMovieFileOutput is added to the session.
-         */
-        session.sessionPreset = .photo
-        
+                
         var defaultVideoDevice: AVCaptureDevice?
+        var defaultAudioDevice: AVCaptureDevice?
         
         // Add video input.
         do {
             // Choose the back dual camera, if available, otherwise default to a wide angle camera.
             
-            let discoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [.externalUnknown], mediaType: nil, position: .unspecified)
+            let discoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [.externalUnknown, .builtInMicrophone], mediaType: nil, position: .unspecified)
             print(discoverySession.devices)
 
             for device in discoverySession.devices {
@@ -159,8 +158,10 @@ class ViewController: NSViewController {
                 print("manufacturer = \(device.manufacturer)")
                 print("deviceType = \(device.deviceType)")
                 print("hasMediaType(.audio) \(device.hasMediaType(.audio))")
-                if device.localizedName.starts(with: "USB") {
+                if device.localizedName.starts(with: "USB") && device.hasMediaType(.video) {
                     defaultVideoDevice = device
+                } else if device.localizedName.starts(with: "USB") && device.hasMediaType(.audio) {
+                    defaultAudioDevice = device
                 }
             }
             
@@ -181,41 +182,33 @@ class ViewController: NSViewController {
                 session.commitConfiguration()
                 return
             }
+            
+            guard let audioDevice = defaultAudioDevice else {
+                print("Default audio device is unavailable.")
+                setupResult = .configurationFailed
+                session.commitConfiguration()
+                return
+            }
+            let audioDeviceInput = try AVCaptureDeviceInput(device: audioDevice)
+            
+            if session.canAddInput(audioDeviceInput) {
+                session.addInput(audioDeviceInput)
+                self.audioDeviceInput = audioDeviceInput
+                session.addOutput(audioOutput)
+                audioOutput.volume = 1.0
+            } else {
+                print("Couldn't add audio device input to the session.")
+                setupResult = .configurationFailed
+                session.commitConfiguration()
+                return
+            }
+            
         } catch {
-            print("Couldn't create video device input: \(error)")
+            print("Couldn't create device input: \(error)")
             setupResult = .configurationFailed
             session.commitConfiguration()
             return
         }
-        
-        // Add an audio output device.
-//        do {
-//            var audioInputDevice: AVCaptureDevice?
-//
-//            let discoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [.externalUnknown], mediaType: .audio, position: .unspecified)
-//            print(discoverySession.devices)
-//
-//            for device in discoverySession.devices {
-//                print("---------------------------------------------")
-//                print("uniqueID = \(device.uniqueID)")
-//                print("modelID = \(device.modelID)")
-//                print("localizedName = \(device.localizedName)")
-//                print("manufacturer = \(device.manufacturer)")
-//                if device.localizedName.starts(with: "USB") {
-//                    audioInputDevice = device
-//                }
-//            }
-//
-//            let audioDeviceInput = try AVCaptureDeviceInput(device: audioInputDevice!)
-//
-//            if session.canAddInput(audioDeviceInput) {
-//                session.addInput(audioDeviceInput)
-//            } else {
-//                print("Could not add audio device input to the session")
-//            }
-//        } catch {
-//            print("Could not create audio device input: \(error)")
-//        }
         
         session.commitConfiguration()
     }
