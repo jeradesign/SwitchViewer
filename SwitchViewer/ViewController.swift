@@ -158,9 +158,9 @@ class ViewController: NSViewController {
                 print("manufacturer = \(device.manufacturer)")
                 print("deviceType = \(device.deviceType)")
                 print("hasMediaType(.audio) \(device.hasMediaType(.audio))")
-                if device.localizedName.starts(with: "USB") && device.hasMediaType(.video) {
+                if device.localizedName.starts(with: "AV.io HD") && device.hasMediaType(.video) {
                     defaultVideoDevice = device
-                } else if device.localizedName.starts(with: "USB") && device.hasMediaType(.audio) {
+                } else if device.localizedName.starts(with: "AV.io HD") && device.hasMediaType(.audio) {
                     defaultAudioDevice = device
                 }
             }
@@ -195,7 +195,7 @@ class ViewController: NSViewController {
                 session.addInput(audioDeviceInput)
                 self.audioDeviceInput = audioDeviceInput
                 session.addOutput(audioOutput)
-                audioOutput.volume = 1.0
+                audioOutput.volume = 0.5
             } else {
                 print("Couldn't add audio device input to the session.")
                 setupResult = .configurationFailed
