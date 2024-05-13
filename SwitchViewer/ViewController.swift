@@ -158,9 +158,9 @@ class ViewController: NSViewController {
                 print("manufacturer = \(device.manufacturer)")
                 print("deviceType = \(device.deviceType)")
                 print("hasMediaType(.audio) \(device.hasMediaType(.audio))")
-                if device.localizedName.starts(with: "AV.io HD") && device.hasMediaType(.video) {
+                if device.localizedName.starts(with: "USB3. 0 capture") && device.hasMediaType(.video) {
                     defaultVideoDevice = device
-                } else if device.localizedName.starts(with: "AV.io HD") && device.hasMediaType(.audio) {
+                } else if device.localizedName.starts(with: "USB3. 0 capture") && device.hasMediaType(.audio) {
                     defaultAudioDevice = device
                 }
             }
