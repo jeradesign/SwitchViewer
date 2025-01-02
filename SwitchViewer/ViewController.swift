@@ -37,7 +37,6 @@ class ViewController: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
 
         // Set up the video preview view.
         
@@ -115,6 +114,12 @@ class ViewController: NSViewController {
                 }
             }
         }
+    }
+    
+    override func viewDidAppear() {
+        super.viewDidAppear()
+        
+        self.view.window?.isMovableByWindowBackground = true
     }
     
     override func viewWillDisappear() {
