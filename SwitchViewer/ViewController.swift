@@ -200,7 +200,7 @@ class ViewController: NSViewController {
                 session.addInput(audioDeviceInput)
                 self.audioDeviceInput = audioDeviceInput
                 session.addOutput(audioOutput)
-                audioOutput.volume = 0.5
+                audioOutput.volume = 1.0
             } else {
                 print("Couldn't add audio device input to the session.")
                 setupResult = .configurationFailed
